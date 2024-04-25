@@ -22,7 +22,7 @@ const Login = () => {
     const handleLogin = async () => {
         setIsLoading(true)
         try{
-        const res = await fetch(`${url}/dashboard/login/`,{method:"POST",mode:'cors',headers:{'Content-Type': 'application/json'},body:JSON.stringify(formData)});
+        const res = await fetch(`${url}/dashboard/login/`,{method:"POST",mode:'no-cors',headers:{'Content-Type': 'application/json'},body:JSON.stringify(formData)});
         if(res.ok){
             const data = await res.json();
             console.log(data);
