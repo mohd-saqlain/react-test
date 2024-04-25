@@ -78,6 +78,7 @@ function Sidebar(props) {
       <AppBar
         position="fixed"
         sx={{
+          backgroundColor:'#399057',
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
@@ -92,8 +93,8 @@ function Sidebar(props) {
           >
             <Menu />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            
+          <Typography variant="h6" color='white' noWrap component="div">
+            Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -113,7 +114,7 @@ function Sidebar(props) {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth,backgroundColor:'#FDB92B' },
           }}
         >
           {drawer}
@@ -122,7 +123,7 @@ function Sidebar(props) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth,backgroundColor:'#FDB92B' },
           }}
           open
         >
