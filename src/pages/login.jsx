@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import bg from "../assets/login_bg.png";
 import logo from "../assets/RSFP-logo.png";
 import { url } from "../utils/api";
-import DialogLoader from "../assets/components/DialogLoader";
+import DialogLoader from "../components/DialogLoader";
 
 const Login = () => {
     const [formData,setFormData] = useState({username:"",password:""});
@@ -22,7 +22,7 @@ const Login = () => {
     const handleLogin = async () => {
         setIsLoading(true)
         try{
-        const res = await fetch(`${url}/dashboard/login/`,{method:"POST",headers:{'Content-Type': 'application/json'},body:JSON.stringify(formData)});
+        const res = await fetch(`${url}/dashboard/login/`,{method:"POST",mode:'cors',headers:{'Content-Type': 'application/json'},body:JSON.stringify(formData)});
         if(res.ok){
             const data = await res.json();
             console.log(data);
