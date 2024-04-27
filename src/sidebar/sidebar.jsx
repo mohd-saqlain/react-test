@@ -11,16 +11,17 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Menu,Mail,Inbox } from 'react-feather';
+import { Menu,Mail,Inbox, Home, DollarSign, Package, Truck, HelpCircle, Repeat, Users, Bell, User, PhoneCall, Settings, ChevronRight, LogOut } from 'react-feather';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import logo from "../assets/RSFP-logo.png";
 
 const drawerWidth = 240;
 
-function Sidebar(props) {
-  const { window } = props;
+function Sidebar({children}) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const [timer,setTimer] = React.useState(0);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -37,34 +38,143 @@ function Sidebar(props) {
     }
   };
 
+  React.useEffect(()=>{
+    const timerId = setInterval(()=>setTimer((prevVal)=>prevVal + 1),1000);
+    return ()=>clearInterval(timerId);
+  },[timer])
+
+
+  const formatDate = (date) => {
+    var months = [
+      "January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December"
+    ];
+    
+    let day = date.getDate();
+    let monthIndex = date.getMonth();
+    let year = date.getFullYear();
+  
+    let formattedDate = day + ' ' + months[monthIndex] + ' ' + year;
+    
+    return formattedDate;
+  }
+
+  const formatTime = () => {
+    const date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+
+    return hours.toString().padStart(2,'0') + ':' + minutes.toString().padStart(2,'0') + ':' + seconds.toString().padStart(2,'0');
+  }
+
+  const menuItems = [{
+    id:0,
+    title:"Dashboard",
+    icon:<Home size={20} />,
+    route:'/dashboard',
+    active:true,
+  },{
+    id:1,
+    title:"Payments",
+    icon:<DollarSign  size={20}/>,
+    route:'/dashboard',
+    active:false,
+  },{
+    id:2,
+    title:"Purchase Orders",
+    icon:<Package size={20}/>,
+    route:'/dashboard',
+    active:false,
+  },{
+    id:3,
+    title:"Shipments",
+    icon:<Truck size={20}/>,
+    route:'/dashboard',
+    active:false,
+  },{
+    id:4,
+    title:"Enquiry",
+    icon:<HelpCircle size={20}/>,
+    route:'/dashboard',
+    active:false,
+  },{
+    id:5,
+    title:"Sorting",
+    icon:<Repeat size={20}/>,
+    route:'/dashboard',
+    active:false,
+  },{
+    id:6,
+    title:"Users",
+    icon:<User size={20}/>,
+    route:'/dashboard',
+    active:false,
+  },{
+    id:7,
+    title:"Notifications",
+    icon:<Bell size={20}/>,
+    route:'/dashboard',
+    active:false,
+  },{
+    id:8,
+    title:"Community",
+    icon:<Users size={20}/>,
+    route:'/dashboard',
+    active:false,
+  },{
+    id:9,
+    title:"Ticket Support",
+    icon:<PhoneCall size={20}/>,
+    route:'/dashboard',
+    active:false,
+  },{
+    id:10,
+    title:"Settings",
+    icon:<Settings size={20}/>,
+    route:'/dashboard',
+    active:false,
+  }]
+
   const drawer = (
     <div>
-      <Toolbar />
-      <Divider />
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+      {/* <Toolbar /> */}
+      <Box display="flex" justifyContent='center' gap={1} py={2} alignItems="center">
+            <img src={logo} style={{ width: "2rem" }} />
+            <Typography variant="body1" fontSize={36} color="#399057">
+              RSFP
+            </Typography>
+          </Box>
+      <Divider sx={{ bgcolor: "white" }} />
+      <List disablePadding>
+        {menuItems.map((item, index) => (
+          <>
+          <ListItem sx={item.active ? {py:0,backgroundColor:'white'}:{py:0}} key={item.title} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <Inbox /> : <Mail />}
+              <ListItemIcon sx={{color:'black'}}>
+                {item.icon}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primaryTypographyProps={{fontSize:14}} primary={item.title} />
+              <ChevronRight size={15}/>
             </ListItemButton>
           </ListItem>
+          </>
         ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+         <Divider sx={{mt:6,backgroundColor:'white'}}/>
+          <ListItem  disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <Inbox /> : <Mail />}
+              <ListItemIcon sx={{color:'black'}}>
+               <LogOut/>
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primaryTypographyProps={{fontSize:14}} primary="Logout" />
+              <ChevronRight size={15}/>
             </ListItemButton>
           </ListItem>
-        ))}
+          <Divider sx={{backgroundColor:'white'}} />
+          <ListItem  disablePadding>
+              <ListItemText primaryTypographyProps={{fontSize:9,pl:2}} primary="Powered by Rashail Infotech © 2022" />
+              <Typography variant='caption' sx={{fontSize:9,pr:2}}>v 1.1.2</Typography>
+          </ListItem>
       </List>
     </div>
   );
@@ -93,9 +203,15 @@ function Sidebar(props) {
           >
             <Menu />
           </IconButton>
+          <Box display='flex' sx={{width:'100%'}} justifyContent='space-between'>
           <Typography variant="h6" color='white' noWrap component="div">
             Dashboard
           </Typography>
+          <Box textAlign='right'>
+            <Typography variant='body2' color='white' >Good Morning</Typography>
+            <Typography variant='body2'  color='white' fontSize={12} >{formatDate(new Date)} - {formatTime()}</Typography>
+          </Box>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box
@@ -123,7 +239,7 @@ function Sidebar(props) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth,backgroundColor:'#FDB92B' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth,backgroundColor:'#FDB92B',border:0 },
           }}
           open
         >
@@ -135,33 +251,7 @@ function Sidebar(props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+       {children}
       </Box>
     </Box>
   );

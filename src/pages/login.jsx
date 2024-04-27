@@ -62,7 +62,7 @@ const Login = () => {
             <img src={logo} style={{ width: "2rem" }} />
             <Typography variant="h4" color="#399057">
               RSFP
-            </Typography>{" "}
+            </Typography>
           </Box>
           <Typography variant="body1" fontSize={25}>
             Log into your account
