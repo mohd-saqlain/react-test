@@ -7,7 +7,7 @@ import { privateRoutes } from './routes/privateRoutes'
 import Sidebar from './sidebar/sidebar'
 
 function App() {
-
+  const userToken = localStorage.getItem('@token');
   return (
     <Routes>
       {authRoutes.map(({path,element})=>(

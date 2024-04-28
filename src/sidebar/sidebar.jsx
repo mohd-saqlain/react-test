@@ -15,10 +15,12 @@ import { Menu,Mail,Inbox, Home, DollarSign, Package, Truck, HelpCircle, Repeat, 
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import logo from "../assets/RSFP-logo.png";
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 function Sidebar({children}) {
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const [timer,setTimer] = React.useState(0);
@@ -136,6 +138,11 @@ function Sidebar({children}) {
     active:false,
   }]
 
+  const logOut = () =>{
+    localStorage.removeItem("@token");
+    navigate('/',{replace:true});
+  }
+
   const drawer = (
     <div>
       {/* <Toolbar /> */}
@@ -162,7 +169,7 @@ function Sidebar({children}) {
         ))}
          <Divider sx={{mt:6,backgroundColor:'white'}}/>
           <ListItem  disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={logOut}>
               <ListItemIcon sx={{color:'black'}}>
                <LogOut/>
               </ListItemIcon>
