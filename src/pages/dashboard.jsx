@@ -3,6 +3,7 @@ import { Typography, Grid,CircularProgress,Box } from "@mui/material";
 import SmallCards from "../components/SmallCards";
 import { Activity, BookOpen, CheckCircle, List, PieChart } from "react-feather";
 import { url } from "../utils/api";
+import MidCards from "../components/MidCards";
 
 const Dashboard = () => {
   const [apiData,setData] = useState({});
@@ -31,7 +32,7 @@ const Dashboard = () => {
         Dashboard
       </Typography>
       <Typography variant="body2">A quick data overview</Typography>
-    {isLoading ? <Box display='flex' justifyContent='center' alignItems='center' ><CircularProgress /></Box>  :<Grid container gap={5} my={2}>
+    {isLoading ? <Box display='flex' justifyContent='center' alignItems='center' ><CircularProgress /></Box>  : <><Grid container gap={5} mb={3} mt={2}>
         {[
           {
             icon: <Activity />,
@@ -64,7 +65,7 @@ const Dashboard = () => {
             color: "#EDFF7C",
           },
         ].map((item, index) => (
-          <Grid item md={2}>
+          <Grid item md={2} sm={12}>
             <SmallCards
               icon={item.icon}
               value={apiData[item.key]}
@@ -73,7 +74,20 @@ const Dashboard = () => {
             />
           </Grid>
         ))}
-      </Grid>}
+      </Grid>
+      <Grid container spacing={4}>
+        {[
+          {heading:"App Users",subHeading1:"Registered Users",subHeading2:"Pending Users",value1:"registered_users",value2:"pending_users"},
+          {heading:"Total Orders",subHeading1:"Completed Orders",subHeading2:"Pending Orders",value1:"completed_orders",value2:"pending_orders"},
+          {heading:"Total Dues",subHeading1:"Total Amount",subHeading2:"Total Vendors",value1:"total_dues_amount_string",value2:"total_amount_string"},
+          {heading:"Total Shipments",subHeading1:"Completed",subHeading2:"In Transist",value1:"total_shipment_completed",value2:"total_shipment_in_transist"},
+          ].map((item)=>(
+        <Grid item md={6} sm={12} xs={12}>
+          <MidCards {...item} value1={apiData[item.value1]} value2={apiData[item.value2]} />
+        </Grid>
+          ))}
+      </Grid>
+      </>}
     </>
   );
 };
